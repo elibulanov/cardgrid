@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState, CSSProperties } from "react";
 import './index.css';
 import Modal from 'react-modal';
 import React from 'react';
+import PuffLoader from "react-spinners/PuffLoader";
 
 
 const customStyles = {
@@ -15,11 +16,27 @@ const customStyles = {
   },
 };
 
+const override = {
+  display: "block",
+  margin: "0 auto",
+  borderColor: "red",
+};
+
 
 function App() {
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
-  
+  let [loading, setLoading] = useState(true);
+  let [color, setColor] = useState("#ffffff");
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() => {
+      setLoading(false)
+
+    }, 5000)
+  })
+
   function openModal() {
     setIsOpen(true);
     console.log("test")
@@ -62,6 +79,7 @@ function App() {
   ])
   return (
     <div>
+
       <section>
         <div className="container">
           <h1>Cards</h1>
@@ -75,6 +93,7 @@ function App() {
                   <p>
                     some text some text some text some text some text some
                   </p>
+                 
                   <button className="btn" onClick={openModal}>Explore</button>
                 </div>
               ))
@@ -91,16 +110,26 @@ function App() {
         overlayClassName="Overlay"
         contentLabel="Example Modal"
       >
+        <div className="modalContent">
         <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
         <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
-        <form>
+        
+          {
+            loading ?
+              <PuffLoader color={color} loading={loading} cssOverride={override} size={150} aria-label="Loading Spinner" data-testid="loader"/>
+              :
+              <img src="https://images.unsplash.com/photo-1669051759318-e3f68b839d1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80"></img>
+          }
+        
+        {/* <form>
           <input />
           <button>tab navigation</button>
           <button>stays</button>
           <button>inside</button>
           <button>the modal</button>
-        </form>
+         
+        </form> */}
+        </div>
       </Modal>
     </div>
   );
