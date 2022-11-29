@@ -59,11 +59,6 @@ function App() {
     console.log("test")
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
-  }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -111,7 +106,7 @@ function App() {
                     {card.title}
                   </h3>
                   <p>
-                    some text some text some text some text some text some
+                    Skate Park details
                   </p>
 
 
@@ -124,7 +119,7 @@ function App() {
       </section>
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
+        
         ariaHideApp={false}
         onRequestClose={closeModal}
         className="Modal"
@@ -132,7 +127,7 @@ function App() {
         contentLabel="Example Modal"
       >
         <div className="modalContent">
-          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+          <h2>Skatepark</h2>
           <button onClick={closeModal}>close</button>
 
           <Canvas>
