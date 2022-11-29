@@ -1,8 +1,25 @@
-import { useEffect, useState, CSSProperties } from "react";
+import React, { useEffect, useState, useRef, CSSProperties } from "react";
 import './index.css';
 import Modal from 'react-modal';
-import React from 'react';
+import { Canvas, useFrame } from '@react-three/fiber'
+import { useLoader } from "@react-three/fiber";
 import PuffLoader from "react-spinners/PuffLoader";
+import * as THREE from 'three'
+import { Suspense, useLayoutEffect } from 'react'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useGLTF, MeshReflectorMaterial, Environment, Stage, PresentationControls } from '@react-three/drei'
+import { OrbitControls } from "@react-three/drei"; 
+
+const Model = () => {
+  const gltf = useLoader(GLTFLoader, "./park.glb");
+  return (
+    <>
+      <primitive object={gltf.scene} scale={0.02} />
+    </>
+  );
+};
+
+
 
 
 const customStyles = {
@@ -77,12 +94,15 @@ function App() {
       text: "some text some text some text some text some text some ",
     },
   ])
+
+
+
   return (
     <div>
 
       <section>
         <div className="container">
-          <h1>Cards</h1>
+          <h1></h1>
           <div className="cards">
             {
               cards.map((card, i) => (
@@ -93,7 +113,8 @@ function App() {
                   <p>
                     some text some text some text some text some text some
                   </p>
-                 
+
+
                   <button className="btn" onClick={openModal}>Explore</button>
                 </div>
               ))
@@ -111,17 +132,20 @@ function App() {
         contentLabel="Example Modal"
       >
         <div className="modalContent">
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
-        <button onClick={closeModal}>close</button>
-        
-          {
-            loading ?
-              <PuffLoader color={color} loading={loading} cssOverride={override} size={150} aria-label="Loading Spinner" data-testid="loader"/>
-              :
-              <img src="https://images.unsplash.com/photo-1669051759318-e3f68b839d1d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80"></img>
-          }
-        
-        {/* <form>
+          <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2>
+          <button onClick={closeModal}>close</button>
+
+          <Canvas>
+            
+        <Suspense fallback={null}>
+          <Model />
+          <OrbitControls />
+          <Environment preset="sunset" background={false} />
+        </Suspense>
+      </Canvas>
+
+
+          {/* <form>
           <input />
           <button>tab navigation</button>
           <button>stays</button>
