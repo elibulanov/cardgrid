@@ -8,7 +8,7 @@ import * as THREE from 'three'
 import { Suspense, useLayoutEffect } from 'react'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useGLTF, MeshReflectorMaterial, Environment, Stage, PresentationControls } from '@react-three/drei'
-import { OrbitControls } from "@react-three/drei"; 
+import { OrbitControls } from "@react-three/drei";
 
 const Model = () => {
   const gltf = useLoader(GLTFLoader, "./park.glb");
@@ -18,8 +18,6 @@ const Model = () => {
     </>
   );
 };
-
-
 
 
 const customStyles = {
@@ -94,7 +92,6 @@ function App() {
 
   return (
     <div>
-
       <section>
         <div className="container">
           <h1></h1>
@@ -119,7 +116,7 @@ function App() {
       </section>
       <Modal
         isOpen={modalIsOpen}
-        
+
         ariaHideApp={false}
         onRequestClose={closeModal}
         className="Modal"
@@ -129,25 +126,13 @@ function App() {
         <div className="modalContent">
           <h2>Skatepark</h2>
           <button onClick={closeModal}>close</button>
-
           <Canvas>
-            
-        <Suspense fallback={null}>
-          <Model />
-          <OrbitControls />
-          <Environment preset="sunset" background={false} />
-        </Suspense>
-      </Canvas>
-
-
-          {/* <form>
-          <input />
-          <button>tab navigation</button>
-          <button>stays</button>
-          <button>inside</button>
-          <button>the modal</button>
-         
-        </form> */}
+            <Suspense fallback={null}>
+              <Model />
+              <OrbitControls />
+              <Environment preset="sunset" background={false} />
+            </Suspense>
+          </Canvas>
         </div>
       </Modal>
     </div>
